@@ -1,0 +1,7 @@
+__pycache__
+keys/__pycache__
+keys/private_key.json
+keys/public_key.json
+docs/text.enc
+docs/text_decrypted.txt
+.vscode/

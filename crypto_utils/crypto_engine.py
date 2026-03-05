@@ -35,30 +35,37 @@ def encrypt_file(input_path, output_path=None):
             if not chunk:
                 break
 
+            chunk_len = len(chunk)
             m = int.from_bytes(chunk, byteorder='big')
-
             c = pow(m, e, n)
 
-            f_out.write(str(c) + '\n')
+            # Save the original chunk length so we can restore leading zeros.
+            f_out.write(f"{chunk_len}:{c}\n")
 
 
 def decrypt_file(input_path, output_path, private_key):
-    d, n = private_key
-    
+    # Accept either a dict (from JSON) or a tuple/list of (d, n).
+    if isinstance(private_key, dict):
+        d = int(private_key["d"])
+        n = int(private_key["n"])
+    else:
+        d, n = private_key
+        d = int(d)
+        n = int(n)
+
     print(f"Descriptografando: {input_path}")
     
     with open(input_path, 'r') as f_in, open(output_path, 'wb') as f_out:
         for line in f_in:
-            c = int(line.strip())
-            d, n = private_key
-            d = int(d)
-            n = int(n)
-            
+            length_str, c_str = line.strip().split(":", 1)
+            chunk_len = int(length_str)
+            c = int(c_str)
+
             m = pow(c, d, n)
-            
-            byte_length = (m.bit_length() + 7) // 8
-            chunk = m.to_bytes(byte_length, byteorder='big')
-            
+
+            # Restore leading zeros by using the original chunk length.
+            chunk = m.to_bytes(chunk_len, byteorder='big')
+
             f_out.write(chunk)
 
 

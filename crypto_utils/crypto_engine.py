@@ -10,22 +10,31 @@ PUBLIC_KEY_PATH = "keys/public_key.json"
 PRIVATE_KEY_PATH = "keys/private_key.json"
 
 
-def encrypt_file(input_path, output_path=None):
+def encrypt_file(input_path, output_path=None, public_key=None, save_keys_flag=True):
     """Encrypt `input_path` to `output_path`.
 
-    This function will always generate a new RSA keypair, save both public and
-    private keys to `keys/public_key.json` and `keys/private_key.json`, and then
-    use the generated public key to encrypt the file.
+    If `public_key` is provided, it is used to encrypt without generating new keys.
+    Otherwise, a new keypair is created and saved to disk.
 
     If `output_path` is None, the output file will be `input_path + ".enc"`.
     """
     if output_path is None:
         output_path = input_path + ".enc"
 
-    public_key, private_key = generate_keys()
-    e, n = public_key
-    d, _ = private_key
-    save_keys(e, d, n)
+    if public_key is None:
+        public_key, private_key = generate_keys()
+        e, n = public_key
+        d, _ = private_key
+        if save_keys_flag:
+            save_keys(e, d, n)
+    else:
+        if isinstance(public_key, dict):
+            e = int(public_key["e"])
+            n = int(public_key["n"])
+        else:
+            e, n = public_key
+            e = int(e)
+            n = int(n)
 
     print(f"Criptografando: {input_path} -> {output_path}")
 
@@ -107,3 +116,15 @@ def save_keys(e, d, n):
         json.dump(private_key_data, f)
 
     print("\nChaves salvas")
+
+
+def load_public_key(path=PUBLIC_KEY_PATH):
+    """Load a public key JSON file (e, n)."""
+    with open(path, "r") as f:
+        return json.load(f)
+
+
+def load_private_key(path=PRIVATE_KEY_PATH):
+    """Load a private key JSON file (d, n)."""
+    with open(path, "r") as f:
+        return json.load(f)

@@ -38,6 +38,12 @@ keys/               # armazenamento das chaves geradas
    ```
    - Executa a sequência de geração, encriptação, leitura das chaves e desencriptação, mostrando o texto restaurado.
 
+5. **Interface gráfica (Tkinter)**
+   ```bash
+   python gui.py
+   ```
+   - Abre uma janela onde é possível gerar chaves, editar as chaves pública/privada, criptografar e descriptografar arquivos em passos separados.
+
 ## Componentes principais
 
 - `crypto_utils/crypto_engine.py` - funções centrais de RSA: geração de chaves, salvamento, encriptação e desencriptação em blocos.

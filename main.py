@@ -5,15 +5,9 @@ from crypto_utils import encrypt_file, decrypt_file
 
 def run_demo():
 
-    #original_file = "docs/text.txt"
-    #encrypted_file = "docs/text.enc"
-    #restored_file = "docs/final_text.txt"
-    #public_key_file = "keys/public_key.json"
-    #private_key_file = "keys/private_key.json"
-
-    original_file = "docs/santarosa.png"
-    encrypted_file = "docs/santarosa.enc"
-    restored_file = "docs/santarosa_restored.png"
+    original_file = "docs/text.txt"
+    encrypted_file = "docs/text.enc"
+    restored_file = "docs/final_text.txt"
     public_key_file = "keys/public_key.json"
     private_key_file = "keys/private_key.json"
 

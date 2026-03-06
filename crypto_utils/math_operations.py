@@ -68,4 +68,3 @@ def generate_prime(bits):
         if miller_rabin(p):
             print(f"\nPrimo gerado: {p}\n")
             return p
-

@@ -11,15 +11,13 @@ def run_demo():
     #public_key_file = "keys/public_key.json"
     #private_key_file = "keys/private_key.json"
 
-    original_file = "docs/cv_chris.pdf"
-    encrypted_file = "docs/cv_chris.enc"
-    restored_file = "docs/cv_chris_restored.pdf"
+    original_file = "docs/santarosa.png"
+    encrypted_file = "docs/santarosa.enc"
+    restored_file = "docs/santarosa_restored.png"
     public_key_file = "keys/public_key.json"
     private_key_file = "keys/private_key.json"
 
     encrypt_file(original_file, encrypted_file)
-
-    # pegar a chaves do arquivo
 
     with open(private_key_file, "r") as f:
         private_key = json.load(f)

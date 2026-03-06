@@ -7,6 +7,7 @@ def mdc(a, b):
     print(f"\nMDC calculado: {a}\n")
     return a
 
+
 def modular_inverter(e, phi):
     """Calculate d (private key) such that (d * e) % phi == 1"""
     m0 = phi
@@ -37,9 +38,12 @@ def miller_rabin(n, k=5):
     Test whether a number n is prime.
     k: number of attempts (the higher k, the greater the certainty).
     """
-    if n < 2: return False
-    if n == 2 or n == 3: return True
-    if n % 2 == 0: return False
+    if n < 2:
+        return False
+    if n == 2 or n == 3:
+        return True
+    if n % 2 == 0:
+        return False
 
     r, d = 0, n - 1
     while d % 2 == 0:
@@ -52,15 +56,16 @@ def miller_rabin(n, k=5):
 
         if x == 1 or x == n - 1:
             continue
-            
+
         for _ in range(r - 1):
             x = pow(x, 2, n)
             if x == n - 1:
                 break
         else:
             return False
-            
+
     return True
+
 
 def generate_prime(bits):
     while True:

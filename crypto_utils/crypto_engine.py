@@ -38,22 +38,20 @@ def encrypt_file(input_path, output_path=None, public_key=None, save_keys_flag=T
 
     print(f"Criptografando: {input_path} -> {output_path}")
 
-    with open(input_path, 'rb') as f_in, open(output_path, 'w') as f_out:
+    with open(input_path, "rb") as f_in, open(output_path, "w") as f_out:
         while True:
             chunk = f_in.read(BLOCK_SIZE)
             if not chunk:
                 break
 
             chunk_len = len(chunk)
-            m = int.from_bytes(chunk, byteorder='big')
+            m = int.from_bytes(chunk, byteorder="big")
             c = pow(m, e, n)
 
-            # Save the original chunk length so we can restore leading zeros.
             f_out.write(f"{chunk_len}:{c}\n")
 
 
 def decrypt_file(input_path, output_path, private_key):
-    # Accept either a dict (from JSON) or a tuple/list of (d, n).
     if isinstance(private_key, dict):
         d = int(private_key["d"])
         n = int(private_key["n"])
@@ -63,8 +61,8 @@ def decrypt_file(input_path, output_path, private_key):
         n = int(n)
 
     print(f"Descriptografando: {input_path}")
-    
-    with open(input_path, 'r') as f_in, open(output_path, 'wb') as f_out:
+
+    with open(input_path, "r") as f_in, open(output_path, "wb") as f_out:
         for line in f_in:
             length_str, c_str = line.strip().split(":", 1)
             chunk_len = int(length_str)
@@ -72,8 +70,7 @@ def decrypt_file(input_path, output_path, private_key):
 
             m = pow(c, d, n)
 
-            # Restore leading zeros by using the original chunk length.
-            chunk = m.to_bytes(chunk_len, byteorder='big')
+            chunk = m.to_bytes(chunk_len, byteorder="big")
 
             f_out.write(chunk)
 
@@ -99,15 +96,9 @@ def generate_keys():
 def save_keys(e, d, n):
     os.makedirs("keys", exist_ok=True)
 
-    public_key_data = {
-        "e": e,
-        "n": n
-    }
+    public_key_data = {"e": e, "n": n}
 
-    private_key_data = {
-        "d": d,
-        "n": n
-    }
+    private_key_data = {"d": d, "n": n}
 
     with open(PUBLIC_KEY_PATH, "w") as f:
         json.dump(public_key_data, f)

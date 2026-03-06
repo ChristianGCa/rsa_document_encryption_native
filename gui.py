@@ -47,8 +47,14 @@ class RSAApp(tk.Tk):
         pub_btn_frame = tk.Frame(pub_frame)
         pub_btn_frame.pack(fill="x", padx=pad)
 
-        tk.Button(pub_btn_frame, text="Carregar (keys/public_key.json)", command=self._load_public_key).pack(side="left")
-        tk.Button(pub_btn_frame, text="Salvar", command=self._save_public_key).pack(side="left", padx=(8, 0))
+        tk.Button(
+            pub_btn_frame,
+            text="Carregar (keys/public_key.json)",
+            command=self._load_public_key,
+        ).pack(side="left")
+        tk.Button(pub_btn_frame, text="Salvar", command=self._save_public_key).pack(
+            side="left", padx=(8, 0)
+        )
 
         # Private key
         priv_frame = tk.LabelFrame(frame_top, text="Chave Privada (d, n)")
@@ -60,14 +66,22 @@ class RSAApp(tk.Tk):
         priv_btn_frame = tk.Frame(priv_frame)
         priv_btn_frame.pack(fill="x", padx=pad)
 
-        tk.Button(priv_btn_frame, text="Carregar (keys/private_key.json)", command=self._load_private_key).pack(side="left")
-        tk.Button(priv_btn_frame, text="Salvar", command=self._save_private_key).pack(side="left", padx=(8, 0))
+        tk.Button(
+            priv_btn_frame,
+            text="Carregar (keys/private_key.json)",
+            command=self._load_private_key,
+        ).pack(side="left")
+        tk.Button(priv_btn_frame, text="Salvar", command=self._save_private_key).pack(
+            side="left", padx=(8, 0)
+        )
 
         # Key generation
         gen_frame = tk.Frame(self)
         gen_frame.pack(fill="x", padx=pad, pady=(0, pad))
 
-        tk.Button(gen_frame, text="Gerar novo par de chaves", command=self._generate_keys).pack(side="left")
+        tk.Button(
+            gen_frame, text="Gerar novo par de chaves", command=self._generate_keys
+        ).pack(side="left")
 
         # Encryption/Decryption
         op_frame = tk.LabelFrame(self, text="Operações")
@@ -83,7 +97,9 @@ class RSAApp(tk.Tk):
         self.encrypt_output_entry = self._build_file_selector(
             encrypt_frame, "Arquivo de saída:", "Salvar como...", "", ""
         )
-        tk.Button(encrypt_frame, text="Criptografar", command=self._on_encrypt).pack(pady=(pad, 0))
+        tk.Button(encrypt_frame, text="Criptografar", command=self._on_encrypt).pack(
+            pady=(pad, 0)
+        )
 
         # Decrypt
         decrypt_frame = tk.LabelFrame(op_frame, text="Descriptografar")
@@ -95,14 +111,18 @@ class RSAApp(tk.Tk):
         self.decrypt_output_entry = self._build_file_selector(
             decrypt_frame, "Arquivo de saída:", "Salvar como...", "", ""
         )
-        tk.Button(decrypt_frame, text="Descriptografar", command=self._on_decrypt).pack(pady=(pad, 0))
+        tk.Button(decrypt_frame, text="Descriptografar", command=self._on_decrypt).pack(
+            pady=(pad, 0)
+        )
 
         # Status
         self.status = tk.StringVar(value="Pronto")
         status_label = tk.Label(self, textvariable=self.status, anchor="w")
         status_label.pack(fill="x", padx=pad, pady=(0, pad))
 
-    def _build_file_selector(self, parent, label_text, button_text, entry_text, default_path):
+    def _build_file_selector(
+        self, parent, label_text, button_text, entry_text, default_path
+    ):
         row = tk.Frame(parent)
         row.pack(fill="x", padx=8, pady=4)
 
@@ -147,7 +167,9 @@ class RSAApp(tk.Tk):
             self.pub_text.insert(tk.END, json.dumps(pub, indent=2))
             self._set_status("Chave pública carregada.")
         except Exception as e:
-            messagebox.showerror("Erro", f"Não foi possível carregar a chave pública:\n{e}")
+            messagebox.showerror(
+                "Erro", f"Não foi possível carregar a chave pública:\n{e}"
+            )
 
     def _load_private_key(self):
         try:
@@ -156,7 +178,9 @@ class RSAApp(tk.Tk):
             self.priv_text.insert(tk.END, json.dumps(priv, indent=2))
             self._set_status("Chave privada carregada.")
         except Exception as e:
-            messagebox.showerror("Erro", f"Não foi possível carregar a chave privada:\n{e}")
+            messagebox.showerror(
+                "Erro", f"Não foi possível carregar a chave privada:\n{e}"
+            )
 
     def _save_public_key(self):
         try:
@@ -168,7 +192,9 @@ class RSAApp(tk.Tk):
                 json.dump({"e": pub["e"], "n": pub["n"]}, f)
             self._set_status("Chave pública salva.")
         except Exception as e:
-            messagebox.showerror("Erro", f"Não foi possível salvar a chave pública:\n{e}")
+            messagebox.showerror(
+                "Erro", f"Não foi possível salvar a chave pública:\n{e}"
+            )
 
     def _save_private_key(self):
         try:
@@ -180,7 +206,9 @@ class RSAApp(tk.Tk):
                 json.dump({"d": priv["d"], "n": priv["n"]}, f)
             self._set_status("Chave privada salva.")
         except Exception as e:
-            messagebox.showerror("Erro", f"Não foi possível salvar a chave privada:\n{e}")
+            messagebox.showerror(
+                "Erro", f"Não foi possível salvar a chave privada:\n{e}"
+            )
 
     def _on_encrypt(self):
         try:
@@ -213,9 +241,13 @@ class RSAApp(tk.Tk):
             save_keys(pub[0], priv[0], pub[1])
 
             self.pub_text.delete("1.0", tk.END)
-            self.pub_text.insert(tk.END, json.dumps({"e": pub[0], "n": pub[1]}, indent=2))
+            self.pub_text.insert(
+                tk.END, json.dumps({"e": pub[0], "n": pub[1]}, indent=2)
+            )
             self.priv_text.delete("1.0", tk.END)
-            self.priv_text.insert(tk.END, json.dumps({"d": priv[0], "n": priv[1]}, indent=2))
+            self.priv_text.insert(
+                tk.END, json.dumps({"d": priv[0], "n": priv[1]}, indent=2)
+            )
             self._set_status("Chaves geradas e salvas.")
         except Exception as e:
             messagebox.showerror("Erro", f"Não foi possível gerar chaves:\n{e}")

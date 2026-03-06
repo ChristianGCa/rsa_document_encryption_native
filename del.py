@@ -1,6 +1,7 @@
 import os
 import glob
 
+
 def delete_files():
     paths = [
         "docs/*.enc",
@@ -9,7 +10,7 @@ def delete_files():
         "keys/public_key.json",
         "keys/private_key.json",
     ]
-    
+
     for path in paths:
         # Se tiver wildcard (*), usa glob
         if "*" in path:
@@ -22,6 +23,7 @@ def delete_files():
                 print(f"Arquivo excluído: {path}")
             else:
                 print(f"Arquivo não encontrado: {path}")
+
 
 if __name__ == "__main__":
     delete_files()

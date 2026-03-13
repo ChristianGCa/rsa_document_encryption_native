@@ -4,3 +4,4 @@ keys/private_key.json
 keys/public_key.json
 docs/
 .vscode/
+venv/

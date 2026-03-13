@@ -4,7 +4,7 @@ import os
 from .math_operations import modular_inverter, generate_prime
 
 
-BIT_LENGTH = 1024
+BIT_LENGTH = 2048
 BLOCK_SIZE = (BIT_LENGTH // 8) - 1
 PUBLIC_KEY_PATH = "keys/public_key.json"
 PRIVATE_KEY_PATH = "keys/private_key.json"

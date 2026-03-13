@@ -33,7 +33,7 @@ def modular_inverter(e, phi):
     return x
 
 
-def miller_rabin(n, k=5):
+def miller_rabin(n, k=64):
     """
     Test whether a number n is prime.
     k: number of attempts (the higher k, the greater the certainty).
